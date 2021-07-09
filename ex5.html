@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Leaflet Zoomify San Fran Demo</title>
+    <link rel="stylesheet" href="./leaflet/leaflet.css" />
+    <style type="text/css">
+        html, body, #photo {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="photo"></div>
+    <script src="./leaflet/leaflet-src.js"></script>
+    <script type="text/javascript" src="./Leaflet.Zoomify-master/L.TileLayer.Zoomify.js"></script>
+
+    <script type="application/javascript">
+		var map = L.map('photo', {
+        	maxZoom: 10, //Does not matter anymore, maxNativeZoom prevents loading of missing zoom levels
+	        minZoom: 0,
+   	     	crs: L.CRS.Simple //Set a flat projection, as we are projecting an image
+    	});
+
+    	//Loading the Zoomify tile layer, notice the URL
+    	var layer = L.tileLayer.zoomify('https://bcdigschol.github.io/tilingMappingWorkshop/experiment5/{g}/{z}-{x}-{y}.jpg', {
+			width: 10106,
+			height: 13089,
+			attribution: 'ONeill Library'
+		}).addTo(map);
+
+		//Setting the view to our layer bounds, set by our Zoomify plugin
+		map.fitBounds(layer.options.bounds);
+    </script>
+</body>
+</html>
